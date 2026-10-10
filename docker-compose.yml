@@ -1,0 +1,32 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: cpay_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: cpay_db
+      MYSQL_USER: cpay_user
+      MYSQL_PASSWORD: secret_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - cpay_mysqldata:/var/lib/mysql
+
+  redis:
+    image: redis:7-alpine
+    container_name: cpay_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: cpay_rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15673:15672"
+
+volumes:
+  cpay_mysqldata:
